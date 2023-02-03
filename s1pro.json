@@ -1,0 +1,665 @@
+{
+	"className": "IPcamera",
+	"classId": 458,
+	"category": "camera",
+	"categoryId": 521,
+	"description": "网络摄像机描述文件",
+	"version": 1,
+	"defaultName": "网络摄像机",
+	"systemServersVersion": 1,
+	"serverList": [{
+			"serverName": "camera",
+			"serverId": 232,
+			"version": 1,
+			"properties": [{
+					"name": "type",
+					"eid": 1,
+					"description": "摄像头视频通信类型",
+					"data": {
+						"type": "enum",
+						"enum": ["p2p", "ip", "sip"]
+					},
+					"rw": "r"
+				},
+				{
+					"name": "state",
+					"eid": 2,
+					"description": "摄像头视频服务状态",
+					"data": {
+						"type": "enum",
+						"enum": ["ready", "busy", "offline"]
+					},
+					"rw": "r"
+				},
+				{
+					"name": "screenCfg",
+					"eid": 3,
+					"description": "摄像头拍摄视频显示到设备屏幕方式设置",
+					"data": {
+						"type": "enum",
+						"enum": ["auto", "manual"]
+					},
+					"rw": "rw"
+				},
+				{
+					"name": "liveViewCfg",
+					"eid": 4,
+					"description": "视频实时查看功能开启设置",
+					"data": {
+						"type": "switch"
+					},
+					"rw": "rw"
+				},
+				{
+					"name": "isSupportSpeak",
+					"eid": 6,
+					"description": "是否支持对讲",
+					"data": {
+						"type": "switch"
+					},
+					"rw": "r"
+				},
+				{
+					"name": "nightVisionStatus",
+					"eid": 8,
+					"description": "夜视状态",
+					"data": {
+						"type": "switch"
+					},
+					"rw": "rw"
+				},
+				{
+					"name": "volume",
+					"eid": 9,
+					"description": "摄像机音量",
+					"data": {
+						"type": "number",
+						"range": [0, 100],
+						"step": 1
+					},
+					"rw": "rw"
+				},
+				{
+					"name": "eventRecordTime",
+					"eid": 10,
+					"description": "事件录像时长",
+					"data": {
+						"type": "number",
+						"range": [1, 3600],
+						"step": 1
+					},
+					"rw": "rw"
+				}
+			],
+			"commands": [{
+					"name": "startVideo",
+					"eid": 7,
+					"description": "启动视频服务",
+					"inputData": {
+						"type": "none"
+					},
+					"outputData": {
+						"type": "none"
+					}
+				},
+				{
+					"name": "sleep",
+					"eid": 7,
+					"description": "控制摄像机进入休眠状态",
+					"inputData": {
+						"type": "none"
+					},
+					"outputData": {
+						"type": "none"
+					}
+				}
+			]
+		},
+		{
+			"serverName": "imageConfig",
+			"serverId": 235,
+			"version": 1,
+			"properties": [{
+					"name": "flipVertical",
+					"eid": 1,
+					"rw": "rw",
+					"description": "图像垂直翻转",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "flipHorizontal",
+					"eid": 2,
+					"rw": "rw",
+					"description": "图像水平翻转",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "dateTimeDisplay",
+					"eid": 3,
+					"rw": "rw",
+					"description": "图像日期显示开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "dateTimePosition",
+					"eid": 4,
+					"rw": "rw",
+					"description": "日期显示位置",
+					"data": {
+						"type": "enum",
+						"enum": ["leftTop", "rightTop", "leftBottom", "rightBottom", "center"]
+					}
+				},
+				{
+					"name": "deviceNameDisplay",
+					"eid": 5,
+					"rw": "rw",
+					"description": "设备名称显示开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "deviceNamePosition",
+					"eid": 6,
+					"rw": "rw",
+					"description": "设备名称显示位置",
+					"data": {
+						"type": "enum",
+						"enum": ["leftTop", "rightTop", "leftBottom", "rightBottom", "center"]
+					}
+				}
+			],
+			"commands": [{
+				"name": "reset",
+				"eid": 7,
+				"description": "重置配置",
+				"inputData": {
+					"type": "none"
+				},
+				"outputData": {
+					"type": "none"
+				}
+			}]
+		},
+		{
+			"serverName": "cameraPan",
+			"serverId": 236,
+			"version": 1,
+			"description": "云台服务",
+			"properties": [],
+			"commands": [{
+					"name": "turn",
+					"eid": 4,
+					"description": "云台转动",
+					"inputData": {
+						"type": "object",
+						"fields": [{
+								"name": "left",
+								"description": "正数为左转，负数为右转，零为水平转动停止",
+								"data": {
+									"type": "number",
+									"range": [-360, 360]
+								}
+							},
+							{
+								"name": "up",
+								"description": "正数为向上转，负数为向下转，零为垂直转动停止",
+								"data": {
+									"type": "number",
+									"range": [-360, 360]
+								}
+							}
+						]
+					},
+					"outputData": {
+						"type": "none"
+					}
+				},
+				{
+					"name": "cruise",
+					"eid": 5,
+					"description": "巡航, 入参-1：一直巡航；0：停止巡航",
+					"inputData": {
+						"type": "number",
+						"range": [-1, 10000],
+						"step": 1
+					},
+					"outputData": {
+						"type": "none"
+					}
+				},
+				{
+					"name": "startCheck",
+					"eid": 6,
+					"description": "云台自检校准",
+					"inputData": {
+						"type": "none"
+					},
+					"outputData": {
+						"type": "none"
+					}
+				}
+			]
+		},
+		{
+			"serverName": "SDCardManager",
+			"serverId": 237,
+			"version": 1,
+			"description": "SD卡管理服务",
+			"properties": [{
+					"name": "id",
+					"eid": 1,
+					"rw": "r",
+					"description": "SD卡ID",
+					"data": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "size",
+					"eid": 2,
+					"rw": "r",
+					"description": "SD卡总容量",
+					"data": {
+						"type": "number"
+					}
+				},
+				{
+					"name": "availableSize",
+					"eid": 3,
+					"rw": "r",
+					"description": "SD卡剩余可用容量",
+					"data": {
+						"type": "number"
+					}
+				},
+				{
+					"name": "status",
+					"eid": 4,
+					"rw": "r",
+					"description": "SD卡插入状态",
+					"data": {
+						"type": "enum",
+						"enum": ["inserted", "notInserted"]
+					}
+				}
+			],
+			"commands": [{
+				"name": "format",
+				"eid": 5,
+				"description": "格式化SD卡",
+				"inputData": {
+					"type": "none"
+				},
+				"outputData": {
+					"type": "none"
+				}
+			}]
+		},
+		{
+			"serverName": "recordManager",
+			"serverId": 238,
+			"version": 1,
+			"description": "录像管理服务",
+			"properties": [{
+					"name": "localRecordEnable",
+					"eid": 1,
+					"rw": "rw",
+					"description": "本地录像功能使能开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "localRecordType",
+					"eid": 2,
+					"rw": "rw",
+					"description": "本地录像类型",
+					"data": {
+						"type": "enum",
+						"enum": ["allDay", "eventRecord"]
+					}
+				},
+				{
+					"name": "cloudRecordEnable",
+					"eid": 3,
+					"rw": "rw",
+					"description": "云存录像功能使能开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "cloudRecordType",
+					"eid": 4,
+					"rw": "rw",
+					"description": "云存录像类型",
+					"data": {
+						"type": "enum",
+						"enum": ["allDay", "eventRecord"]
+					}
+				}
+			]
+		},
+		{
+			"serverName": "motionDetection",
+			"serverId": 239,
+			"version": 1,
+			"description": "移动侦测服务",
+			"properties": [{
+					"name": "enable",
+					"eid": 1,
+					"rw": "rw",
+					"description": "移动侦测功能开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "sensitivity",
+					"eid": 2,
+					"rw": "rw",
+					"description": "移动侦测灵敏度",
+					"data": {
+						"type": "enum",
+						"enum": ["low", "mid", "high"]
+					}
+				},
+				{
+					"name": "humanShapeDetectionEnable",
+					"eid": 3,
+					"rw": "rw",
+					"description": "人形侦测使能",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "followTracksEnable",
+					"eid": 4,
+					"rw": "rw",
+					"description": "移动跟踪功能使能",
+					"data": {
+						"type": "switch"
+					}
+				}
+			],
+			"events": [{
+					"name": "imageChanged",
+					"eid": 5,
+					"description": "画面变化事件",
+					"data": {
+						"type": "object",
+						"fields": [{
+								"name": "time",
+								"description": "事件触发时间， 格式 ：2023-01-08 15:49:10.100",
+								"data": {
+									"type": "string"
+								}
+							},
+							{
+								"name": "imageUrl",
+								"description": "事件图片URL",
+								"data": {
+									"type": "string"
+								}
+							}
+						]
+					}
+				},
+				{
+					"name": "humanMotion",
+					"eid": 5,
+					"description": "有人移动事件",
+					"data": {
+						"type": "object",
+						"fields": [{
+								"name": "time",
+								"description": "事件触发时间， 格式 ：2023-01-08 15:49:10.100",
+								"data": {
+									"type": "string"
+								}
+							},
+							{
+								"name": "imageUrl",
+								"description": "事件图片URL",
+								"data": {
+									"type": "string"
+								}
+							}
+						]
+					}
+				}
+
+			]
+		},
+		{
+			"serverName": "soundDetection",
+			"serverId": 240,
+			"version": 1,
+			"description": "声音侦测服务",
+			"properties": [{
+					"name": "enable",
+					"eid": 1,
+					"rw": "rw",
+					"description": "声音检测使能",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "sensitivity",
+					"eid": 2,
+					"rw": "rw",
+					"description": "声音侦测灵敏度",
+					"data": {
+						"type": "enum",
+						"enum": ["low", "mid", "high"]
+					}
+				},
+				{
+					"name": "cryDetectionEnable",
+					"eid": 3,
+					"rw": "rw",
+					"description": "检测哭声功能使能",
+					"data": {
+						"type": "switch"
+					}
+				}
+			],
+			"events": [{
+					"name": "soundAbnormal",
+					"eid": 5,
+					"description": "声音异常事件",
+					"data": {
+						"type": "object",
+						"fields": [{
+								"name": "time",
+								"description": "事件触发时间， 格式 ：2023-01-08 15:49:10.100",
+								"data": {
+									"type": "string"
+								}
+							},
+							{
+								"name": "imageUrl",
+								"description": "事件图片URL",
+								"data": {
+									"type": "string"
+								}
+							}
+						]
+					}
+				},
+				{
+					"name": "cryEvent",
+					"eid": 5,
+					"description": "哭声事件",
+					"data": {
+						"type": "object",
+						"fields": [{
+								"name": "time",
+								"description": "事件触发时间， 格式 ：2023-01-08 15:49:10.100",
+								"data": {
+									"type": "string"
+								}
+							},
+							{
+								"name": "imageUrl",
+								"description": "事件图片URL",
+								"data": {
+									"type": "string"
+								}
+							}
+						]
+					}
+				}
+
+			]
+		},
+		{
+			"serverName": "smartGuard",
+			"serverId": 241,
+			"version": 1,
+			"description": "智能看家服务",
+			"properties": [{
+					"name": "onoff",
+					"eid": 1,
+					"rw": "rw",
+					"description": "智能看家开关",
+					"data": {
+						"type": "switch"
+					}
+				},
+				{
+					"name": "guardTimes",
+					"eid": 2,
+					"rw": "p",
+					"description": "看家时间段",
+					"data": {
+						"type": "array",
+						"arrayItem": {
+							"type": "object",
+							"fields": [{
+									"name": "type",
+									"description": "时间段类型",
+									"data": {
+										"type": "enum",
+										"enum": ["allDay", "daytime", "night", "customize"]
+									}
+								},
+								{
+									"name": "week",
+									"description": "重复周期",
+									"data": {
+										"type": "enum",
+										"enum": [
+											"Monday", "Tuesday", "Wednesday",
+											"Thursday", "Friday", "Saturday", "Sunday"
+										]
+									}
+								},
+								{
+									"name": "startTime",
+									"description": "开始时间 格式：18:00",
+									"data": {
+										"type": "string"
+									}
+								},
+								{
+									"name": "endTime",
+									"description": "结束时间 格式：18:59",
+									"data": {
+										"type": "string"
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "alarmDelayTime",
+					"eid": 3,
+					"rw": "rw",
+					"description": "延时报警时间",
+					"data": {
+						"type": "number",
+						"range": [0, 3600]
+					}
+				}
+			],
+			"commands": [{
+				"name": "setGuardTime",
+				"eid": 4,
+				"description": "看家时间段设置",
+				"inputData": {
+					"type": "object",
+					"fields": [{
+							"name": "opt",
+							"description": "操作方式",
+							"data": {
+								"type": "enum",
+								"enum": ["add", "delete", "edit"]
+							}
+						},
+						{
+							"name": "index",
+							"description": "时间段编号",
+							"data": {
+								"type": "number",
+								"range": [0, 127]
+							}
+						},
+						{
+							"name": "time",
+							"description": "时间段",
+							"data": {
+								"type": "object",
+								"fields": [{
+										"name": "type",
+										"description": "时间段类型",
+										"data": {
+											"type": "enum",
+											"enum": ["allDay", "daytime", "night", "customize"]
+										}
+									},
+									{
+										"name": "week",
+										"description": "重复周期",
+										"data": {
+											"type": "enum",
+											"enum": [
+												"Monday", "Tuesday", "Wednesday",
+												"Thursday", "Friday", "Saturday", "Sunday"
+											]
+										}
+									},
+									{
+										"name": "startTime",
+										"description": "开始时间 格式：18:00",
+										"data": {
+											"type": "string"
+										}
+									},
+									{
+										"name": "endTime",
+										"description": "结束时间 格式：18:59",
+										"data": {
+											"type": "string"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}]
+		}
+	]
+}
